@@ -1,0 +1,112 @@
+ls f?.txt -> dopasuje nam wynik do dokładnie jednego znaku
+ls f[135].txt -> dopasuje nam do jednego znaku 1 lub 3 lub 5
+ls f[!135].txt -> dopsauje do dowolnego znaku nie będacego 1 lub 3 lub 5
+ls f[1-4].txt -> dopasuje do dowolnego znaku w zakresie od 1 do 4 włącznie
+
+ls [a-h]1.txt
+ls [e-x][2-5]
+
+touch file_{a,b,c,d}
+mkdir folder{1,2,3,4}
+
+------------------
+skrypty
+------------------
+let 
+
+#!/bin/bash
+let a=5+4
+echo $a
+
+#!/bin/bash
+let b=5
+let b++
+echo $b
+
+----------------------------------------------------
+skrypt z miesiacami z duzych i małych liter z case
+----------------------------------------------------
+
+case $1 in
+[Jj][Aa][Nn][Aa]{Rr]{yy])       miesiac="styczen"
+[Ff[Ee][Bb][Rr][Uu][Aa][Rr][Yy] miesac="luty"
+[Mm][Aa][Rr][Cc][Hh])		miesiac="marzec"
+[Aa][Pp][Rr][Ii][Ll])		miesiac="kwiecien"
+*)
+esac
+echo "$1 in polish is $miesac"
+
+------------------------------------------------------
+skrypt do czytania plików bez komend tylko while i for
+------------------------------------------------------
+for f in *
+do
+	if [ -f "$f" ]
+	then
+		while read -r line
+		do
+			echo "$line"
+		done < $f
+	fi
+done
+
+----------------------------------------------------
+delcaracja tablicy
+----------------------------------------------------
+
+jeden sposób
+
+name=(value1 value2 value3 ...)
+
+#!/bin/bash
+
+# Deklaracja tablicy
+fruits=("apple" "banana" "orange" "kiwi")
+
+echo "${fruits[@]}"
+
+echo "${fruits[2]}"
+
+echo "${#fruits[@]}"
+
+drugi sposób
+
+#!/bin/bash
+
+# Deklaracja tablicy
+declare -a numbers=(1 2 3 4 5)
+
+echo "${numbers[@]}"
+
+echo "${numbers[3]}"
+
+echo "${#numbers[@]}"
+
+--------------------------------
+IFS 
+
+#!/bin/bash
+
+IFS=','
+
+my_array=()
+
+while read -ra line; do
+  my_array+=("${line[@]}")
+done < my_file.txt
+
+for element in "${my_array[@]}"; do
+  echo "$element"
+done
+
+------------zadanie z cut i csv -------
+
+filename="$!"
+shift
+if ech "$1" | grep -q ".\csv$"
+then
+	echo "It's not a csv file"
+else
+	fields=$(echo $@ | tr ' ' ',')
+	cut -d',' -f"$fields" "$filename"
+fi

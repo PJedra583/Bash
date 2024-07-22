@@ -1,0 +1,140 @@
+Napisz skrypt, ktdry pobierze cztery argumenty: PLIKWE1, PLIKWE2,
+PLIKWY1 oraz PLIKWY2 i wykorzystujqc wczytane pliki wejsciowe
+o nazwach zadanych tymi argumentami PLIKWE1 oraz PLIKWE2 wykona
+nastepujace operacje:
+
+1. Do pliku o nazwie zadanej argumentem PLIKWY1 naprzemiennie
+przepisze kolejne linie z plikow o nazwach zadanych argumentami
+PLIKWE1 oraz PLIKWE2 w ten sposdb, ie:
+
+a. jako pierwsza bedzie pierwsza linia z pierwszego pliku,
+b. jako druga linia bedzie pierwsza linia z drugiego pliku,
+c. jako trzecia linia bedzie druga linia z pierwszego pliku,
+d. jako czwarta linia bedzie druga linia z drugiego pliku,
+e. itp.
+
+2. Jezeli w dowolnym z plikow wejsciowych linie sie skoncza, to
+pozostate linie z dluzszego pliku wejsciowego zostana zapisane
+do pliku o nazwie zadanej argumentem PLIKWY2.
+
+Skrypt powinien zawierac mechanizmy sprawdzenia poprawnosci
+uruchomienia tego skryptu: liczbe argumentéw i istnienia plikow
+wejsciowych.
+
+
+
+ULPLIKWE1 ()
+{
+N1=0
+LINIA1=""
+while read LINIA
+do
+	let N1++
+		if [ $N1 -eq $NRL1 ] ; then
+		LINTAI=$LINIA
+		fi
+done < "“$PLIKWE1"
+}
+ULPLIKWE2 ()
+{
+N2=0
+LINIA2=""
+	while read LINIA
+        do
+		let N2++
+		if [ $N2 -eq $NRL2 ]
+		then
+			LINIA2=$LINIA
+		fi
+	done < "“$PLIKWE2"
+}
+
+
+przepsym () 
+{
+if [ $LLPLIKWE1 -1t $LLPLIKWE2 ] ; then
+	LLINII=$LLPLIKWE1
+else
+	LLINII=$LLPLIKWE2
+fi
+	echo “liczba linii $LLINII"
+	for (( i=1 3; $i <= SLLINII ; i++ )) 3 do
+		NRL1=$i
+		ULPLIKWE1
+			echo "Znalaztem(1): $LINIA1"
+			echo $LINIA1 >> "$PLIKWY1"
+		NRL2=$i
+		ULPLIKWE2
+
+			echo "Znalaztem(2): $LINIA2"
+			echo $LINIA2 >> "$PLIKWY1"
+done
+}
+
+niesymprzep ()
+{
+przepsym
+if [ $LLPLIKWE1 -gt $LLPLIKWE2 ]
+then
+	for  (( i=$LLPLIKWE2+1; $i <= $LLPLIKWE1 ; i++ ))
+	do
+		NRL1=$i
+		ULPLIKWE1
+			echo "Znalaztem (1a): $LINTA1"
+		echo $LINIA1 >> "$PLIKWY2"
+done
+else
+	for  (( i=$LLPLIKWE2+1; $i <= $LLPLIKWE1 ; i++ ))
+	do
+		NRL2=$i
+		ULPLIKWE2
+			echo "Znalaztem (2a): $LINIA2"
+		echo $LINIA2 >> "$PLIKWY2"
+	done
+fi
+}
+
+przepisanie ()
+{
+ILLPLIKWE1=6
+ILLPLIKWE2=6
+
+while read LINIA
+do
+	let LLPLIKWE1++
+
+done < "“$PLIKWE1"
+while read LINIA
+do
+	let LLPLIKWE2++
+done < "“$PLIKWE2"
+
+echo "Plik $PLIKWE1" ma $LLPLIKWE1 linii"
+echo "Plik $PLIKWE2" ma $LLPLIKWE2 linii"
+
+if [ $LLPLIKWE1 -eq $LLPLIKWE2 ]
+then
+	echo "Tryb pracy: przepisywanie symetryczne"
+	przepsym
+else
+	echo Tryb pracy: przepisywanie niesymetryczne
+	niesymprzep
+fi
+}
+
+if [ $# -ne 4 ]
+then
+	echo "skrypt powinien byc wywotany z czterema argumentami"
+else
+	if [ | -# "$1" -o | -£ "$2" ]
+	then
+		echo “Plik(i) wejsciowe o podanej(ych) nazwie(ach) nie istnieje(a)."
+	else
+		PLIKWE1=$1
+		PLIKWE2=$2
+		PLIKWY1=$3
+		PLIKWY2=$4
+		przepisanie
+	fi
+
+fi

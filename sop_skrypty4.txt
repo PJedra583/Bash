@@ -1,0 +1,158 @@
+ln -s -> softlink / jest to równoznaczne ze skrótem w windowsie
+ln -> hard link / generalnie jest to kopia pliku
+
+echo "Podaj ścieżkę do pliku/folderu:"
+read FILE_OR_DIR
+
+-------------------------------------------------
+
+for i in {1..5}
+do
+echo "Number: $i"
+done
+
+-------------------------------------------------
+
+if [ -e "$FILE_OR_DIR" ]; then
+    echo "Plik/folder istnieje."
+    if [ -f "$FILE_OR_DIR" ]; then
+        echo "To jest plik."
+    elif [ -d "$FILE_OR_DIR" ]; then
+        echo "To jest folder."
+    else
+        echo "To jest coś innego."
+    fi
+else
+    echo "Plik/folder nie istnieje."
+fi
+
+-------------------------------------------------
+
+echo "Podaj wartość od 1 do 3:"
+read VALUE
+
+case $VALUE in
+  1)
+    echo "Wartość to 1"
+    ;;
+  2)
+    echo "Wartość to 2"
+    ;;
+  3)
+    echo "Wartość to 3"
+    ;;
+  *)
+    echo "Nieprawidłowa wartość!"
+    ;;
+esac
+
+-------------------------------------------------
+inne przykładowe skryptów
+-------------------------------------------------
+
+echo "Podaj 5 liczb całkowitych oddzielonych spacją:"
+read -r numbers
+
+if echo "$numbers" | grep -qE '^[0-9]+(\s+[0-9]+)*$'; then
+  echo "Wprowadzono tylko liczby całkowite."
+else
+  echo "Wprowadzono nieprawidłowe dane."
+  exit 1
+fi
+
+echo "Wybierz działanie: (1) Dodawanie (2) Mnożenie"
+read -r operation
+
+case $operation in
+  1)
+    sum=0
+    for number in $numbers; do
+      sum=$((sum + number))
+    done
+    echo "Suma wynosi: $sum"
+    ;;
+  2)
+    product=1
+    for number in $numbers; do
+      product=$((product * number))
+    done
+    echo "Iloczyn wynosi: $product"
+    ;;
+  *)
+    echo "Nieprawidłowe działanie wybrane."
+    ;;
+esac
+
+-------------------------------------------------
+
+echo "Enter a month in Polish:"
+read MONTH
+
+case $MONTH in
+  styczeń)
+    echo "January"
+    ;;
+  luty)
+    echo "February"
+    ;;
+  marzec)
+    echo "March"
+    ;;
+  kwiecień)
+    echo "April"
+    ;;
+  maj)
+    echo "May"
+    ;;
+  czerwiec)
+    echo "June"
+    ;;
+  lipiec)
+    echo "July"
+    ;;
+  sierpień)
+    echo "August"
+    ;;
+  wrzesień)
+    echo "September"
+    ;;
+  październik)
+    echo "October"
+    ;;
+  listopad)
+    echo "November"
+    ;;
+  grudzień)
+    echo "December"
+    ;;
+  *)
+    echo "Invalid month!"
+    ;;
+esac
+
+-------------------------------------------------
+
+#!/bin/bash
+
+echo "Pliki i foldery w bieżącym katalogu i podfolderach:"
+for FILE_OR_DIR in ./*
+do
+  if [ -f "$FILE_OR_DIR" ]; then
+    echo "$FILE_OR_DIR - to jest plik"
+  elif [ -d "$FILE_OR_DIR" ]; then
+    echo "$FILE_OR_DIR - to jest folder"
+    for SUB_FILE_OR_DIR in "$FILE_OR_DIR"/*
+    do
+      if [ -f "$SUB_FILE_OR_DIR" ]; then
+        echo "    $SUB_FILE_OR_DIR - to jest plik"
+      elif [ -d "$SUB_FILE_OR_DIR" ]; then
+        echo "    $SUB_FILE_OR_DIR - to jest folder"
+      else
+        echo "    $SUB_FILE_OR_DIR - to jest coś innego"
+      fi
+    done
+  else
+    echo "$FILE_OR_DIR - to jest coś innego"
+  fi
+done
+

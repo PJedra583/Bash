@@ -1,0 +1,140 @@
+﻿ W C mamy stdin, stdout i stderr, w linuxie jest to mapowane do deskryptora pliku (file descriptors) 0, 1 and 2
+ ls - l /bin/usr 2> ls-output.txt lub ls -l /bin/bin/ 2>> ls-output.txt
+ ls -l /bin/usr &> ls-output.txt lub ls -l /bin/usr &>> ls-output.txt -> wysyła stdout i stderr
+ ls -l /bin/usr 2> /dev/null -> wyrzucamy informacje do "kosza"
+ 
+- chmod 
+- sort  
+- uniq
+- wc 
+- grep 
+- ls | sort (użycie pipe)
+- finger
+- cut
+- find
+- shift
+
+Róznica między " a '
+
+#!/bin/sh 
+#!/bin/bash
+#!/bin/csh -f 
+#!/usr/bin/perl -T
+#!/usr/bin/env python   
+
+
+-------------------------
+
+skrypty
+
+echo "Pierwszy argument to: $1"
+shift
+echo "Pierwszy argument po przesunięciu to: $1"
+
+$ ./script.sh arg1 arg2 arg3
+
+-------------------------
+
+#!/bin/bash
+echo "Pierwszy argument to: $1"
+shift 2
+echo "Pierwszy argument po przesunięciu to: $1"
+
+$ ./script.sh arg1 arg2 arg3 arg4 arg5
+
+-------------------------
+
+#!/bin/bash
+while [ "$#" -gt 0 ]
+do
+    echo "$1"
+    shift
+done
+
+$ ./script.sh arg1 arg2 arg3
+
+-------------------------
+
+#!/bin/bash
+echo "Wszystkie argumenty pozycyjne: $@"
+
+$ ./script.sh arg1 arg2 arg3
+
+--------------------------
+
+#!/bin/bash
+for arg in "$@"
+do
+    echo "Argument: $arg"
+done
+
+
+Komendy 
+cut
+tr
+finger
+who
+przypisanie wartości zmiennym
+var=1
+var="String"
+var=$()
+exit 0 i exit 1
+
+4 - read (w  skryptach)
+
+np. 
+echo "Wpisz swoje imię"
+read moje_imie
+echo Wpisane imię to: $moje_imie
+
+-------------------------------------------
+
+#!/bin/bash
+
+if [ "$1" -eq 1 ]; then
+  mkdir "$2"
+  echo "Folder $2 created."
+elif [ "$1" -eq 2 ]; then
+  rm -r "$2"
+  echo "Folder $2 deleted."
+else
+  echo "Invalid arguments."
+fi
+
+-------------------------------------------
+ulepszenie powyższego kodu
+-------------------------------------------
+
+if [ "$#" -ne 2 ]; then
+  echo "Invalid number of arguments. Usage: $0 <1|2> <folder_name>"
+  exit 1
+fi
+
+if [ "$1" -eq 1 ]; then
+  mkdir "$2"
+  echo "Folder $2 created."
+elif [ "$1" -eq 2 ]; then
+  rm -r "$2"
+  echo "Folder $2 deleted."
+else
+  echo "Invalid arguments. Usage: $0 <1|2> <folder_name>"
+  exit 1
+fi
+
+|------------------------------------------------|
+| Jakie dodatkowe ulepszenia byście wprowadzili? |
+|------------------------------------------------|
+
+-------------------------------------------
+
+# Definiowanie funkcji
+
+function add_numbers {
+  
+}
+
+# Wywołanie funkcji
+
+add_numbers
+
+$ ./script.sh arg1 arg2 arg3
